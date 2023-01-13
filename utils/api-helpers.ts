@@ -1,0 +1,27 @@
+import { FONT_LOADER_MANIFEST } from "next/dist/shared/lib/constants";
+
+export async function fetchPostJSON(url: string, data?: {}) {
+    try {
+        // Default options are marked with *
+        const response = await fetch(url, {
+            method: "POST", // *GET, POST, PUT, DELETE etc.
+            mode: "cors", // no-cors, *cors, same-origin
+            cache: "no-cache", // *default, no cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/json",
+                // "Content-Types": "application/x-ww-form-urlencoded",
+
+            },
+            redirect: "follow", // manual, *follow, error
+            referrerPolicy: "no-referrer", // no-referrer, *client
+            body: JSON.stringify(data || {}),
+        });
+        return await response.json(); // parses JSON response into native JAvascript objects
+    } catch (err) {
+        if (err instanceof Error) {
+            throw new Error(err.message);
+        }
+        throw err;
+    }
+}
